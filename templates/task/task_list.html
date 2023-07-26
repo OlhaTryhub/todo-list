@@ -16,12 +16,17 @@
       <th scope="col">Status</th>
       <th scope="col">Tags</th>
       <th scope="col">Action</th>
+      <th scope="col"></th>
     </tr>
   </thead>
   <tbody>
   {% for task in task_list %}
     <tr>
-      <th scope="row">{{ task.content }}</th>
+      <th scope="row">
+        <a href="{% url 'todo:task-update' pk=task.id %}">
+          {{ task.content }}
+        </a>
+      </th>
       <td>{{ task.datetime }}</td>
       {% if task.deadline.date %}
       <td>{{ task.deadline.date }} {{ task.deadline.hour }}:{{ task.deadline.minute }}</td>
@@ -29,9 +34,9 @@
         <td>no deadline</td>
       {% endif %}
         {% if task.is_done %}
-          <td>Status: done</td>
+          <td>done</td>
         {% else %}
-          <td>Status: in process</td>
+          <td>in process</td>
         {% endif %}
       <td> {% for tag in task.tags.all %}
         {{ tag.name }}
@@ -47,6 +52,13 @@
           <button class="btn btn-secondary">Undo</button>
         </a>
       {% endif %}
+    </td>
+    <td>
+
+        <a href="{% url 'todo:task-delete' pk=task.id %}">
+          <button class="btn btn-danger">Delete</button>
+        </a>
+
     </td>
     </tr>
     {% empty %}

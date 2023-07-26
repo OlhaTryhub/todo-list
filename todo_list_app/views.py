@@ -3,7 +3,8 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views import generic
 
-from .forms import TaskForm
+from .forms import TaskForm, TaskUpdateForm
+
 from todo_list_app.models import Task, Tag
 
 
@@ -58,3 +59,16 @@ def toggle_task_status(request, pk: int) -> HttpResponseRedirect:
         task.is_done = True
         task.save()
     return HttpResponseRedirect(reverse_lazy("todo:task-list"))
+
+
+class TaskUpdateView(generic.UpdateView):
+    model = Task
+    form_class = TaskUpdateForm
+    template_name = "task/task_form.html"
+    success_url = reverse_lazy("todo:task-list")
+
+
+class TaskDeleteView(generic.DeleteView):
+    model = Task
+    template_name = "task/task_confirm_delete.html"
+    success_url = reverse_lazy("todo:task-list")
