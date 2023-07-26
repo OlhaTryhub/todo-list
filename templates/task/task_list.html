@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="col-sm-8">
+  <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Content</th>
+      <th scope="col">Created</th>
+      <th scope="col">Deadline</th>
+      <th scope="col">Status</th>
+      <th scope="col">Tags</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for task in task_list %}
+    <tr>
+      <th scope="row">{{ task.content }}</th>
+      <td>{{ task.datetime }}</td>
+      {% if task.deadline.date %}
+      <td>{{ task.deadline.date }} {{ task.deadline.hour }}:{{ task.deadline.minute }}</td>
+        {% else %}
+        <td>no deadline</td>
+      {% endif %}
+        {% if task.is_done %}
+          <td>Status: done</td>
+        {% else %}
+          <td>Status: in process</td>
+        {% endif %}
+      <td> {% for tag in task.tags.all %}
+        {{ tag.name }}
+        {% endfor %}
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+  </table>
+  </div>
+
+{% endblock %}
