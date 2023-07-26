@@ -39,9 +39,13 @@
       </td>
     <td>
       {% if not task.is_done %}
-      <button class="btn btn-success">Complete</button>
+        <a href="{% url 'todo:toggle-task-satus' pk=task.id %}">
+          <button class="btn btn-success">Complete</button>
+        </a>
       {% else %}
-      <button class="btn btn-secondary">Undo</button>
+        <a href="{% url 'todo:toggle-task-satus' pk=task.id %}">
+          <button class="btn btn-secondary">Undo</button>
+        </a>
       {% endif %}
     </td>
     </tr>
