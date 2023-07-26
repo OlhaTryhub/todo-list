@@ -11,11 +11,13 @@ class TaskListView(generic.ListView):
     model = Task
     queryset = Task.objects.prefetch_related("tags")
     template_name = "task/task_list.html"
+    paginate_by = 5
 
 
 class TagListView(generic.ListView):
     model = Tag
     template_name = "tag/tag_list.html"
+    paginate_by = 5
 
 
 class TaskCreateView(generic.CreateView):
@@ -23,3 +25,17 @@ class TaskCreateView(generic.CreateView):
     template_name = "task/task_form.html"
     form_class = TaskForm
     success_url = reverse_lazy("todo:task-list")
+
+
+class TagCreateView(generic.CreateView):
+    model = Tag
+    fields = "__all__"
+    template_name = "tag/tag_form.html"
+    success_url = reverse_lazy("todo:tag-list")
+
+
+class TagUpdateView(generic.UpdateView):
+    model = Tag
+    fields = "__all__"
+    template_name = "tag/tag_form.html"
+    success_url = reverse_lazy("todo:tag-list")
